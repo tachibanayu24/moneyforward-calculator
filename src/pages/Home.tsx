@@ -2,6 +2,8 @@ import { useNavigate } from 'react-router-dom'
 
 import { Button } from '../components/Button'
 import { ChangeEvent, useState } from 'react'
+import { parse } from 'papaparse'
+import { isValidMFFormat } from '../utils/isValidMFFormat'
 
 export const Home = () => {
   // このhooksで画面遷移のためのメソッドを取ってくることができる
@@ -10,7 +12,7 @@ export const Home = () => {
   const [filename, setFilename] = useState('')
   // このstateはstringですよといっている
   // useState時に初期値をいれないと、undefinedになるが、 <string> などとすると、 undefined | string の型のstateとして宣言される
-  const [csv, setCsv] = useState<string>()
+  const [csv, setCsv] = useState<string[][]>()
 
   // ボタンを押したときに画面遷移するためのハンドラー
   const handleClickButton = () => {
@@ -26,15 +28,13 @@ export const Home = () => {
 
     setFilename(targetCsv.name)
 
-    const reader = new FileReader()
-    // ファイル読み込み完了時に発火するリスナー
-    reader.addEventListener('load', () => {
-      setCsv(typeof reader.result === 'string' ? reader.result : undefined)
+    parse(targetCsv, {
+      encoding: 'Shift-JIS',
+      complete: (results) => {
+        setCsv(results?.data as string[][])
+      },
     })
-    reader.readAsText(targetCsv, 'UTF-8')
   }
-
-  console.log(csv)
 
   return (
     <div className="p-10 text-gray-800">
@@ -48,9 +48,19 @@ export const Home = () => {
       </div>
 
       <div className="text-center">
-        {filename && <p className="mb-4">{filename}は正しいフォーマットのファイルです</p>}
+        <Button
+          label="集計する"
+          onClick={handleClickButton}
+          variant="info"
+          isDisable={!isValidMFFormat(csv)}
+        />
 
-        <Button label="集計する" onClick={handleClickButton} variant="info" />
+        {filename &&
+          (isValidMFFormat(csv) ? (
+            <p className="mt-4">{filename}は正しいフォーマットのファイルです</p>
+          ) : (
+            <p className="mt-4 text-red-700">{filename}は不正なフォーマットです</p>
+          ))}
       </div>
     </div>
   )
