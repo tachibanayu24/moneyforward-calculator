@@ -4,6 +4,7 @@ import { Button } from '../components/Button'
 import { ChangeEvent, useState } from 'react'
 import { parse } from 'papaparse'
 import { isValidMFFormat } from '../utils/isValidMFFormat'
+import { calcExpenses } from '../utils/calcExpenses'
 
 export const Home = () => {
   // このhooksで画面遷移のためのメソッドを取ってくることができる
@@ -16,7 +17,7 @@ export const Home = () => {
 
   // ボタンを押したときに画面遷移するためのハンドラー
   const handleClickButton = () => {
-    navigate('/result')
+    navigate('/result', { state: calcExpenses(csv) })
   }
 
   const handleInputFile = (e: ChangeEvent<HTMLInputElement>) => {
