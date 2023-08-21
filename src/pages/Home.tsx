@@ -1,21 +1,30 @@
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+
 import { Button } from '../components/Button'
-import { TextField } from '../components/TextField'
 
 export const Home = () => {
+  // このhooksで画面遷移のためのメソッドを取ってくることができる
+  const navigate = useNavigate()
+
+  // ボタンを押したときに画面遷移するためのハンドラー
+  const handleClickButton = () => {
+    navigate('/result')
+  }
+
   return (
-    <div>
-      this is home page <br />
-      <Link to="/result">go to result page</Link> <br />
-      <a href="/result" className="text-blue-600">
-        Anchor tag
-      </a>
-      <br />
-      <Button label="成功" onClick={console.log} variant="success" isDisable />
-      <Button label="注意" onClick={console.log} variant="warn" />
-      <Button label="情報" onClick={console.log} variant="info" />
-      <Button label="失敗" onClick={console.log} variant="error" />
-      <TextField label="text" placeholder="入リィくして下し" onChange={console.log} id="sample" />
+    <div className="p-10 text-gray-800">
+      <h1 className="text-4xl font-extrabold mb-4">MoneyForward Calculator</h1>
+      <p className="text-lg">
+        PC版マネーフォワードからダウンロードできるCSVファイルを入力して、集計するためのアプリケーションです。
+      </p>
+
+      <div className="py-16">
+        <input type="file" />
+      </div>
+
+      <div className="flex justify-center">
+        <Button label="集計する" onClick={handleClickButton} variant="info" />
+      </div>
     </div>
   )
 }
