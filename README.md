@@ -8,4 +8,6 @@
 ```sh
 $ npm run dev # ローカルサーバーの起動
 $ npm run lint # Lintの実行
+$ npm run format:check # Prettierによるフォーマットチェック
+$ npm run format:check # Prettierによる上書き
 ```
