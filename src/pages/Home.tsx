@@ -17,7 +17,7 @@ export const Home = () => {
 
   // ボタンを押したときに画面遷移するためのハンドラー
   const handleClickButton = () => {
-    navigate('/result', { state: calcExpenses(csv) })
+    navigate('/result', { state: { amount: calcExpenses(csv) } })
   }
 
   const handleInputFile = (e: ChangeEvent<HTMLInputElement>) => {
