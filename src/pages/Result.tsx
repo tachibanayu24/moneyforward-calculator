@@ -40,7 +40,8 @@ export const Result = () => {
                   <td className="p-2">{expense[1]}</td>
                   <td className="p-2">{(Number(expense[3]) * -1).toLocaleString()}円</td>
                   <td className="p-2">{expense[5]}</td>
-                  <td className="p-2 truncate block w-[400px]">{expense[2]}</td>
+                  <td className="p-2 truncate block max-w-[400px]">{expense[2]}</td>
+                  <td className="p-2">{expense[7] || '-'}</td>
                 </tr>
               ))}
             </table>
