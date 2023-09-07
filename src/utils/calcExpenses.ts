@@ -10,7 +10,6 @@ export const calcExpenses = (entire?: string[][]) => {
     // ある条件のとき処理をやめるような書き方をガード節などという
     if (row.length !== 10) return
 
-    console.log(row)
     if (row[7].includes('共同支出')) {
       sum += Number(row[3])
     }
